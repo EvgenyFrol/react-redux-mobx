@@ -1,0 +1,60 @@
+{
+    "env": {
+        "browser": true,
+        "es2021": true
+    },
+    "extends": [
+        "plugin:react/recommended",
+        "airbnb"
+    ],
+    "parser": "@typescript-eslint/parser",
+    "parserOptions": {
+        "ecmaFeatures": {
+            "jsx": true
+        },
+        "ecmaVersion": 2020,
+        "sourceType": "module"
+    },
+    "plugins": [
+        "react",
+        "@typescript-eslint"
+    ],
+    "rules": {
+        "no-use-before-define": "off",
+        "default-param-last": "off",
+        "react/no-unstable-nested-components": "off",
+        "react/no-namespace": "off",
+        "react/prefer-exact-props": "off",
+        "react/no-arrow-function-lifecycle": "off",
+        "react/no-invalid-html-attribute": "off",
+        "react/no-unused-class-component-methods": "off",
+        "react/prop-types": 0,
+        "import/no-import-module-exports": "off",
+        "import/no-relative-packages": "off",
+        "import/no-unresolved": "off",
+        "import/extensions": "off",
+        "arrow-body-style": 0,
+        "lines-between-class-members": [
+            "error",
+            "always",
+            { "exceptAfterSingleLine": true }
+          ],
+        "react/jsx-filename-extension": "off",
+        "react/function-component-definition": "off",
+        "max-len": ["error", { "code": 150 }],
+        "no-unused-vars": "off",
+        "@typescript-eslint/no-unused-vars": ["error"],
+        "no-plusplus": [2, { 
+            "allowForLoopAfterthoughts": true 
+        }],
+        "space-in-parens": 0,
+        "indent": "off",
+        "no-tabs": 0,
+        "no-mixed-spaces-and-tabs": 0,
+        "react/jsx-indent" : "off",
+        "jsx-a11y/click-events-have-key-events": 0,
+        "jsx-a11y/no-static-element-interactions": 0,
+        "camelcase": 0
+        
+    }
+}
