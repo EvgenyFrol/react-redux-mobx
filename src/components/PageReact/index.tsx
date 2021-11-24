@@ -34,10 +34,13 @@ const PageReact: React.FC = () => {
 	}, [perPage]);
 
 	useEffect(() => {
+		dispatch(setUsersInLocal(onTotal / onPerPage));
+	}, []);
+
+	useEffect(() => {
 		if (!isUseLocalStorage) {
 			dispatch(getUsers(activePage));
 			setIsLoading(false);
-			dispatch(setUsersInLocal(onTotal / onPerPage));
 		}
 	}, [isUseLocalStorage, activePage]);
 
@@ -58,7 +61,8 @@ const PageReact: React.FC = () => {
 	}, [isUseLocalStorage, users, localUser]);
 
 	const onChangeValue = useCallback((event) => {
-		setIsUseLocalstorage(Boolean(Number(event.target.value)));
+		setIsUseLocalstorage(event);
+		alert('ДАнные загружены!');
 	}, [isUseLocalStorage]);
 
 	const changePaginate = useCallback((num: number) => {
@@ -69,19 +73,10 @@ const PageReact: React.FC = () => {
 		<div className={style.userList}>
 			{loading && <h1>идет загрузка...</h1>}
 			{error && <h1>{error}</h1>}
-			<div onChange={onChangeValue}>
-				<div>
-					<label htmlFor="1">
-						<input type="radio" id="1" value="1" name="useLocalStorage" />
-            LocalStorage
-					</label>
-				</div>
-				<div>
-					<label htmlFor="0">
-						<input type="radio" id="0" value="0" name="useLocalStorage" />
-            API
-					</label>
-				</div>
+			<div>
+				<button type="button" aria-label="hidden" onClick={() => onChangeValue(true)} disabled={isUseLocalStorage}>
+					Оффлайн
+				</button>
 			</div>
 			{!isLoading && (
 				<div className={style.userList__container}>

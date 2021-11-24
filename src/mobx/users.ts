@@ -10,20 +10,22 @@ class Users {
   totalPages: number = 0;
   isUseLocalStorage: boolean = false;
   activePage: number = 1;
+	isLoadData: boolean = false;
 
   constructor() {
   	makeAutoObservable(this);
   }
 
   getUsersFromApi = (page: number) => {
-  	axios.get(`https://reqres.in/api/users?page=${page}`).then((res) => {
-  		this.data = res.data.data;
-  		this.page = res.data.page;
-  		this.perPage = res.data.per_page;
-  		this.total = res.data.total;
-  		this.totalPages = res.data.total_pages;
-  	});
-  	this.saveUsersForLocalStore();
+		if (!this.isLoadData) {
+			axios.get(`https://reqres.in/api/users?page=${page}`).then((res) => {
+				this.data = res.data.data;
+				this.page = res.data.page;
+				this.perPage = res.data.per_page;
+				this.total = res.data.total;
+				this.totalPages = res.data.total_pages;
+			});
+		}
   };
 
   saveUsersForLocalStore = () => {
@@ -32,6 +34,8 @@ class Users {
   			localStorage.setItem(`${i}`, JSON.stringify(res.data.data));
   		});
   	}
+		// eslint-disable-next-line no-alert
+		if (this.isLoadData) alert('Данные загружены');
   };
 
   getUsersFromLocalStorage = (page: number) => {
@@ -42,11 +46,11 @@ class Users {
   }
 
   onChangeValue = (event: any) => {
-  	this.isUseLocalStorage = Boolean(Number(event.target.value));
+  	this.isLoadData = event;
   };
 
   changePaginate = (num: number) => {
-  	if (this.isUseLocalStorage) {
+  	if (this.isLoadData) {
   		this.activePage = num;
   	} else {
   		this.getUsersFromApi(num);
@@ -54,7 +58,7 @@ class Users {
   }
 
   getData = () => {
-  	if (this.isUseLocalStorage) {
+  	if (this.isLoadData) {
   		this.getUsersFromLocalStorage(this.activePage);
   	} else {
   		this.getUsersFromApi(this.activePage);

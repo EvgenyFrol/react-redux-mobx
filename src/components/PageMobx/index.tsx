@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 import React, { useEffect } from 'react';
 import { observer } from 'mobx-react';
 import { UserType } from '../../types/types';
@@ -12,21 +11,16 @@ const PageMobX: React.FC = observer(() => {
 		users.getData();
 	}, [users.isUseLocalStorage, users.activePage]);
 
+	useEffect(() => {
+		users.saveUsersForLocalStore();
+	}, [users.isLoadData]);
+
 	return (
 		<div className={style.userList}>
-			<div onChange={users.onChangeValue}>
-				<div>
-					<label htmlFor="1">
-						<input type="radio" id="1" value="1" name="useLocalStorage" />
-            LocalStorage
-					</label>
-				</div>
-				<div>
-					<label htmlFor="0">
-						<input type="radio" id="0" value="0" name="useLocalStorage" />
-            API
-					</label>
-				</div>
+			<div>
+				<button type="button" aria-label="hidden" onClick={() => users.onChangeValue(true)} disabled={users.isLoadData}>
+					Оффлайн
+				</button>
 			</div>
 			<div className={style.userList__container}>
 				{users.data.map((el: UserType) => (
